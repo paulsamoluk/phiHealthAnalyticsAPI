@@ -102,13 +102,23 @@ All `collectedAt` fields are ISO 8601 date strings (`YYYY-MM-DD`).
 
 ### Appointments
 
-#### Get appointments by date
+#### Get appointments for a work week
 
 ```
 GET /appointments?date=YYYY-MM-DD
 ```
 
-Returns the appointment list for the given date. The mock data is always "today", so passing today's date (or omitting the `date` parameter) returns all 8 appointments. Any other date returns `[]`.
+Returns all appointments for the Monday-Friday work week containing the supplied date. If `date` is omitted, the API uses the current date and returns the current work week.
+
+The mock dataset includes 8 appointments distributed across the work week, and `scheduledTime` values are generated from local dates before being serialized as ISO timestamps.
+
+**Query parameters**
+
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| `date` | No | Any date within the work week you want returned, formatted as `YYYY-MM-DD` |
+
+**Response** `400 Bad Request` — invalid `date` format.
 
 **Response** `200 OK`
 
